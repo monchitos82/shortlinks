@@ -19,19 +19,20 @@ This would work as well for execution, the default behavior is searching for `co
 
 ## Examples:
 
-### To create a new shortlink:
+### To create a new "shortlink":
   You can have as many short links to the same URL as you want, there's no validation on duplicate sources (there is on handles):
-  `curl -X POST http://localhost:8080/shorts -H "Content-Type: application/json" -d '{"handle": "ex", "url": "https://example.com"}'`
+
+  `curl -X POST http://{{server}}:8080/shorts -H "Content-Type: application/json" -d '{"handle": "ex", "url": "https://example.com"}'`
   
-  As an alternative, you can use the `/updates` endpoint to load a form in your browser, so you have a simple UI to add or update new entries.
+  As an alternative, you can use the `/updates` endpoint to load a form in your browser, so you have a simple UI to add or update entries.
 
   
 ### To be redirected:
-  `curl -L https://localhost:8080/ex` this would redirect your browser (or CURL in this case) to whatever points the `ex` handle, e.g. `ex` redirects to `https://example.com`
+  `curl -L https://{{server}}:8080/ex` this would redirect your browser (or CURL in this case) to whatever points the `ex` handle, e.g. `ex` redirects to `https://example.com`
 
-To have the best experience for this redirection project, you would want to have this project serving in port 80 and a record in your DNS so you can just use this in your browser like: `https://sl/ex` and be redirected to (github) the site associated to the `ex` handle.
+To have the best experience for this redirection project, you would want to have this project serving in port 80 and a record in your DNS so you can just use this in your browser like: `https://sl/ex` and be redirected to the site associated to the `ex` handle.
 
-If you want to expose this directly, you are advised to use a proxy from your HTTP server so you don't need to add `CAP_NET_BIND_SERVICE` permissions and add security concerns; you can add this directive to your nginx site:
+If you want to expose this directly, you are advised to use a proxy from your HTTP server so you don't need to add `CAP_NET_BIND_SERVICE` permissions and add security concern; you can add this directive to your nginx site configuration:
 
 ```
 	location / {
@@ -45,7 +46,7 @@ If you want to expose this directly, you are advised to use a proxy from your HT
 
 ### How to add this to my DNS?
 
-Well, you can't in the strict sense, even if you add an SRV entry, the result would be messy. But you can add an entry to a small DHCP/DNS instance like dnsmasq! Or you can simply add the entry to your hosts file. These require minimum effort and are very easy to setup.
+Well, you can't in the strict sense, even if you add a `SRV` entry, the result would be messy. But you can add an entry to a small DHCP/DNS instance like dnsmasq! Or you can simply add the entry to your hosts file. These require minimum effort and are very easy to setup (mind this would add the need to update any Iac/playbook/... automation you have).
 
 ```
 # dnsmasq.conf entry
@@ -58,8 +59,8 @@ server=<YOUR DNS IP>
 
 ### Special endpoints
 
-There are a few endpoints in the project intended to serve some functionality other than redirection, these should not be added as handlers:
+There are a few endpoints in this project intended to serve some functionality other than redirection, these **should not be added as handlers**:
 * `/shorts` this is the endpoint used to add new entries into the database
 * `/urls` this endpoint will return all entries from the database in plain text
 * `/updates` this endpoint returns a form to add or update entries into the database
-* `/healthcheck` this is a healthcheck, it returns nothing but a 200 code
+* `/health` this is a healthcheck, it returns nothing but a 200 code
