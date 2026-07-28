@@ -1,0 +1,17 @@
+server:
+  host: localhost
+  port: 8990
+templates:
+  path: /opt/shortlinks/templates
+database:
+  prod:
+    host: localhost
+    user: shortlinks
+    password: shortlinks
+    dbname: shortlinks
+    port: 5432
+    sslmode: disable
+    timezone: UTC
+  test:
+    driver: sqlite # unused, just a pointer
+    dsn: ":memory:"
