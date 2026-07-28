@@ -46,7 +46,7 @@ If you want to expose this directly, you are advised to use a proxy from your HT
 
 ### How to add this to my DNS?
 
-Well, you can't in the strict sense, even if you add a `SRV` entry, the result would be messy. But you can add an entry to a small DHCP/DNS instance like dnsmasq! Or you can simply add the entry to your hosts file. These require minimum effort and are very easy to setup (mind this would add the need to update any Iac/playbook/... automation you have).
+Well, you can't in the strict sense, even if you add a `SRV` entry, the result would be messy. But you can add an entry to a small DHCP/DNS instance like dnsmasq! Or you can simply add the entry to your hosts file. These require minimum effort and are very easy to setup (mind this would add the need to update any IaC, playbook, manifest, etc, automation you have).
 
 ```
 # dnsmasq.conf entry
